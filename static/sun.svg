@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">ゆるキャラ太陽</title>
+  <desc id="desc">にっこり笑う、ゆるい雰囲気の太陽キャラクター。</desc>
+
+  <!-- ==== 可変設定（色・太さ） ==== -->
+  <style>
+    :root{
+      --sun-main:#FFD35A;    /* 本体の色 */
+      --sun-grad:#FFB84D;    /* 影寄り色 */
+      --ray:#FFC246;         /* 光線の色 */
+      --stroke:#F39C12;      /* 外枠の色 */
+      --cheek:#FF8AAE;       /* ほっぺ */
+      --eye:#3A2E2E;         /* 目と口 */
+      --shine:#FFFFFF;       /* ハイライト */
+      --line-w:6;            /* 線の太さ */
+    }
+  </style>
+
+  <!-- ドロップシャドウ（控えめ） -->
+  <defs>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#000" flood-opacity="0.15"></feDropShadow>
+    </filter>
+    <!-- 本体グラデーション -->
+    <radialGradient id="sunGrad" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#FFF3B0"></stop>
+      <stop offset="60%" stop-color="var(--sun-main)"></stop>
+      <stop offset="100%" stop-color="var(--sun-grad)"></stop>
+    </radialGradient>
+  </defs>
+
+  <!-- 背景の余白演出（任意） -->
+  <g opacity="0.05">
+    <circle cx="256" cy="256" r="230" fill="#000"></circle>
+  </g>
+
+  <!-- 光線 -->
+  <g stroke="var(--stroke)" stroke-width="var(--line-w)" stroke-linecap="round" filter="url(#softShadow)">
+    <!-- 12本の光線（等間隔） -->
+    <!-- 角度: 0,30,60,...,330 -->
+    <!-- 半径: 内側 140, 外側 200 -->
+    <g fill="none">
+      <!-- 生成的に書く代わりに手で配置 -->
+      <line x1="256" y1="56" x2="256" y2="12" stroke="var(--ray)"></line>
+      <line x1="356.78" y1="73.22" x2="382.84" y2="31.37" stroke="var(--ray)"></line>
+      <line x1="439.78" y1="156.22" x2="481.63" y2="130.16" stroke="var(--ray)"></line>
+      <line x1="456" y1="256" x2="500" y2="256" stroke="var(--ray)"></line>
+      <line x1="439.78" y1="355.78" x2="481.63" y2="381.84" stroke="var(--ray)"></line>
+      <line x1="356.78" y1="438.78" x2="382.84" y2="480.63" stroke="var(--ray)"></line>
+      <line x1="256" y1="456" x2="256" y2="500" stroke="var(--ray)"></line>
+      <line x1="155.22" y1="438.78" x2="129.16" y2="480.63" stroke="var(--ray)"></line>
+      <line x1="72.22" y1="355.78" x2="30.37" y2="381.84" stroke="var(--ray)"></line>
+      <line x1="56" y1="256" x2="12" y2="256" stroke="var(--ray)"></line>
+      <line x1="72.22" y1="156.22" x2="30.37" y2="130.16" stroke="var(--ray)"></line>
+      <line x1="155.22" y1="73.22" x2="129.16" y2="31.37" stroke="var(--ray)"></line>
+    </g>
+  </g>
+
+  <!-- 本体 -->
+  <g filter="url(#softShadow)">
+    <circle cx="256" cy="256" r="140" fill="url(#sunGrad)" stroke="var(--stroke)" stroke-width="var(--line-w)"></circle>
+  </g>
+
+  <!-- 顔（ゆるキャラ感：目は点＋ゆる笑顔） -->
+  <g transform="translate(0,4)">
+    <!-- 目 -->
+    <circle cx="216" cy="242" r="10" fill="var(--eye)"></circle>
+    <circle cx="296" cy="242" r="10" fill="var(--eye)"></circle>
+    <!-- 目ハイライト -->
+    <circle cx="212.5" cy="238.5" r="3" fill="var(--shine)" opacity="0.75"></circle>
+    <circle cx="292.5" cy="238.5" r="3" fill="var(--shine)" opacity="0.75"></circle>
+
+    <!-- ほっぺ -->
+    <ellipse cx="192" cy="264" rx="18" ry="10" fill="var(--cheek)" opacity="0.7"></ellipse>
+    <ellipse cx="320" cy="264" rx="18" ry="10" fill="var(--cheek)" opacity="0.7"></ellipse>
+
+    <!-- 口（やわらかカーブ） -->
+    <path d="M210 284 C232 306, 280 306, 302 284" fill="none" stroke="var(--eye)" stroke-width="8" stroke-linecap="round"></path>
+    <!-- 口ハイライト（ささやかに） -->
+    <path d="M230 292 Q256 305 282 292" fill="none" stroke="var(--shine)" stroke-width="3" stroke-linecap="round" opacity="0.35"></path>
+
+    <!-- て（小さなアームでバイバイ感） -->
+    <path d="M118 256 q28 -12 44 8" fill="none" stroke="var(--stroke)" stroke-width="8" stroke-linecap="round"></path>
+    <circle cx="160" cy="264" r="4" fill="var(--stroke)"></circle>
+    <path d="M394 256 q-28 -12 -44 8" fill="none" stroke="var(--stroke)" stroke-width="8" stroke-linecap="round"></path>
+    <circle cx="352" cy="264" r="4" fill="var(--stroke)"></circle>
+  </g>
+
+  <!-- つやっぽいハイライト -->
+  <path d="M188 170 q48 -30 112 -18 q18 3 30 10 q-24 -32 -76 -34 q-54 -2 -84 30 q-10 10 -14 24 q8 -4 32 -12z" fill="var(--shine)" opacity="0.25"></path>
+
+</svg>
