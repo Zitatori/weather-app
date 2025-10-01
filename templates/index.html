@@ -8,44 +8,49 @@
     :root { color-scheme: light dark; }
     body{
       font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Noto Color Emoji";
-      margin:0; padding:24px; background:#f9fafb;
+      margin:0; padding:24px; background:#0b0b0b;
+      color:#eaeaea;
     }
     .card{
-      max-width: 520px; margin: 0 auto; background: #fff; border-radius: 16px;
-      padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,.07);
+      max-width: 720px; margin: 0 auto; background: #151515; border-radius: 16px;
+      padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,.35);
     }
     form{ display:flex; gap:8px; margin-bottom:16px; }
     input[type="text"]{
-      flex:1; font-size:16px; padding:10px 12px; border-radius:12px; border:1px solid #ddd;
+      flex:1; font-size:16px; padding:10px 12px; border-radius:12px; border:1px solid #333;
+      background:#0f0f0f; color:#eaeaea;
     }
     button{
-      font-size:16px; padding:10px 14px; border-radius:12px; border:1px solid #111;
-      background:#111; color:#fff; cursor:pointer;
+      font-size:16px; padding:10px 14px; border-radius:12px; border:1px solid #e5e5e5;
+      background:#e5e5e5; color:#111; cursor:pointer;
     }
-    .icon{ margin-top:4px; }
-    .icon img{ width:72px; height:72px; display:block; filter: drop-shadow(0 4px 6px rgba(0,0,0,.15)); }
-    .temp{ font-size:56px; font-weight:700; margin:8px 0; }
+    .hero{
+      display:flex; align-items:center; justify-content:space-between; gap:20px;
+      margin-top:8px;
+    }
+    .left{
+      display:flex; align-items:center; gap:16px;
+    }
+    .icon img{ width:72px; height:72px; display:block; filter: drop-shadow(0 4px 6px rgba(0,0,0,.35)); }
+    .temp{ font-size:56px; font-weight:800; margin:4px 0; }
     .name{ font-weight:600; }
-    .meta{ color:#555; margin-top:4px; }
-    .error{ color:#b00020; margin-top:8px; }
+    .meta{ color:#bbb; margin-top:4px; }
+    .character img{ width:140px; height:auto; display:block; }
+    .error{ color:#ff7b7b; margin-top:8px; }
+
     /* 7日間予報 */
     .forecast{
-      display:flex; gap:10px; margin-top:16px; overflow-x:auto; padding-bottom:6px;
+      display:flex; gap:10px; margin-top:18px; overflow-x:auto; padding-bottom:6px;
     }
     .fcard{
-      min-width:84px; background:#f3f4f6; border-radius:12px; padding:10px; text-align:center;
+      min-width:92px; background:#1f1f1f; border-radius:12px; padding:10px; text-align:center;
     }
-    .ficon{ width:36px; height:36px; display:block; margin:0 auto 6px; }
+    .ficon{ width:32px; height:32px; display:block; margin:0 auto 6px; }
     .ftemp{ font-weight:700; }
-    .fmin{ opacity:.7; font-size:12px; }
-    /* ちょいダーク対応 */
-    @media (prefers-color-scheme: dark){
-      body{ background:#0b0b0b; }
-      .card{ background:#151515; box-shadow: none; }
-      input[type="text"]{ background:#111; border-color:#333; color:#eee; }
-      button{ border-color:#e5e5e5; }
-      .meta{ color:#bbb; }
-      .fcard{ background:#1f1f1f; }
+    .fmin{ opacity:.8; font-size:12px; }
+    @media (max-width: 640px){
+      .hero{ flex-direction:column; align-items:flex-start; }
+      .character img{ width:120px; }
     }
   </style>
 </head>
@@ -59,15 +64,25 @@
     {% if error %}
       <p class="error">{{ error }}</p>
     {% else %}
-      <!-- 現在の天気 -->
-      <div class="icon">
-        <img src="{{ url_for('static', path=icon.file) }}" alt="{{ icon.name }}" />
+
+      <!-- 上段：左に天気情報、右にゆるキャラ -->
+      <div class="hero">
+        <div class="left">
+          <div class="icon">
+            <img src="{{ url_for('static', path=icon.file) }}" alt="{{ icon.name }}" />
+          </div>
+          <div>
+            <div class="temp">{{ temp }}°C</div>
+            <div class="name">{{ city }}{% if country %}, {{ country }}{% endif %}</div>
+            <div class="meta">風速: {{ windspeed }} km/h</div>
+            <div class="meta">更新: {{ time }}</div>
+            <div class="meta">キャラ名: {{ icon.name }}</div>
+          </div>
+        </div>
+        <div class="character">
+          <img src="{{ url_for('static', path=character) }}" alt="character" />
+        </div>
       </div>
-      <div class="temp">{{ temp }}°C</div>
-      <div class="name">{{ city }}{% if country %}, {{ country }}{% endif %}</div>
-      <div class="meta">風速: {{ windspeed }} km/h</div>
-      <div class="meta">更新: {{ time }}</div>
-      <div class="meta">キャラ名: {{ icon.name }}</div>
 
       <!-- 7日間予報 -->
       {% if daily and daily|length > 0 %}
@@ -82,7 +97,9 @@
           {% endfor %}
         </div>
       {% endif %}
+
     {% endif %}
   </div>
 </body>
 </html>
+
